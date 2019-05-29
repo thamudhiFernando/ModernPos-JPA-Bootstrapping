@@ -10,12 +10,16 @@ import java.io.IOException;
 import java.util.Properties;
 
 public class EntityManagerUtil {
+    private static EntityManagerUtil entityManagerUtil;
 
-    public static EntityManager getEntityManager() {
-        Properties properties = null;
+    private EntityManagerUtil() {
+
+    }
+
+    public EntityManagerFactory getFactory() {
+        File propFile = new File("resources/application.properties");
+        Properties properties = new Properties();
         try {
-            File propFile = new File("resources/application.properties");
-            properties = new Properties();
             FileReader fileReader = new FileReader(propFile);
             properties.load(fileReader);
         } catch (FileNotFoundException e) {
@@ -23,9 +27,13 @@ public class EntityManagerUtil {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("unit1", properties);
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        return entityManagerFactory;
+    }
+
+    public static EntityManager getEntityManager() {
+        EntityManagerFactory factory = entityManagerUtil.getFactory();
+        EntityManager entityManager = factory.createEntityManager();
 
         return entityManager;
     }
