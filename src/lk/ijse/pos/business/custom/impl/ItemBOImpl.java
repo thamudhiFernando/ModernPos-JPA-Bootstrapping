@@ -18,7 +18,7 @@ public class ItemBOImpl implements ItemBO {
     private ItemDAO itemDAO = DAOFactory.getInstance().getDAO(DAOTypes.ITEM);
 
     public List<ItemDTO> getAllItems() throws Exception {
-        EntityManager entityManager =  EntityManagerUtil.getEntityManager();
+        EntityManager entityManager =  EntityManagerUtil.getInstance().getEntityManager();
         entityManager.getTransaction().begin();
         itemDAO.setEntityManager(entityManager);
         List<ItemDTO> items = itemDAO.findAll().stream().map(item -> new ItemDTO(item.getCode(), item.getDescription(), item.getUnitPrice(), item.getQtyOnHand())).collect(Collectors.toList());
@@ -30,7 +30,7 @@ public class ItemBOImpl implements ItemBO {
     }
 
     public void saveItem(ItemDTO item) throws Exception {
-        EntityManager entityManager =  EntityManagerUtil.getEntityManager();
+        EntityManager entityManager =  EntityManagerUtil.getInstance().getEntityManager();
         entityManager.getTransaction().begin();
         itemDAO.setEntityManager(entityManager);
         itemDAO.save(new Item(item.getCode(), item.getDescription(), item.getUnitPrice(), item.getQtyOnHand()));
@@ -39,7 +39,7 @@ public class ItemBOImpl implements ItemBO {
     }
 
     public void updateItem(ItemDTO item) throws Exception {
-        EntityManager entityManager =  EntityManagerUtil.getEntityManager();
+        EntityManager entityManager =  EntityManagerUtil.getInstance().getEntityManager();
         entityManager.getTransaction().begin();
         itemDAO.setEntityManager(entityManager);
         itemDAO.update(new Item(item.getCode(), item.getDescription(), item.getUnitPrice(), item.getQtyOnHand()));
@@ -48,7 +48,7 @@ public class ItemBOImpl implements ItemBO {
     }
 
     public void deleteItem(String code) throws Exception {
-        EntityManager entityManager =  EntityManagerUtil.getEntityManager();
+        EntityManager entityManager =  EntityManagerUtil.getInstance().getEntityManager();
         entityManager.getTransaction().begin();
         itemDAO.setEntityManager(entityManager);
         itemDAO.delete(code);

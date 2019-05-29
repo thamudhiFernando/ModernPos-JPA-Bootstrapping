@@ -26,7 +26,7 @@ public class OrderBOImpl implements OrderBO {
     private CustomerDAO customerDAO = DAOFactory.getInstance().getDAO(DAOTypes.CUSTOMER);
 
     public void placeOrder(OrderDTO order) throws Exception {
-        EntityManager entityManager =  EntityManagerUtil.getEntityManager();
+        EntityManager entityManager =  EntityManagerUtil.getInstance().getEntityManager();
         entityManager.getTransaction().begin();
         orderDAO.setEntityManager(entityManager);
         customerDAO.setEntityManager(entityManager);
@@ -55,7 +55,7 @@ public class OrderBOImpl implements OrderBO {
 
     public int generateOrderId() throws Exception {
         try {
-            EntityManager entityManager =  EntityManagerUtil.getEntityManager();
+            EntityManager entityManager =  EntityManagerUtil.getInstance().getEntityManager();
             orderDAO.setEntityManager(entityManager);
             return orderDAO.getLastOrderId() + 1;
         }catch (NullPointerException e){

@@ -18,7 +18,7 @@ public class CustomerBOImpl implements CustomerBO {
 
     @Override
     public CustomerDTO getCustomerById(String id) throws Exception {
-        EntityManager entityManager = EntityManagerUtil.getEntityManager();
+        EntityManager entityManager = EntityManagerUtil.getInstance().getEntityManager();
         entityManager.getTransaction().begin();
         customerDAO.setEntityManager(entityManager);
         Customer customer = customerDAO.find(id);
@@ -30,7 +30,7 @@ public class CustomerBOImpl implements CustomerBO {
     }
 
     public List<CustomerDTO> getAllCustomers() throws Exception {
-        EntityManager entityManager = EntityManagerUtil.getEntityManager();
+        EntityManager entityManager = EntityManagerUtil.getInstance().getEntityManager();
         entityManager.getTransaction().begin();
         customerDAO.setEntityManager(entityManager);
         List<CustomerDTO> customers = customerDAO.findAll().stream().map(customer -> new CustomerDTO(customer.getId(), customer.getName(), customer.getAddress())).collect(Collectors.toList());
@@ -40,7 +40,7 @@ public class CustomerBOImpl implements CustomerBO {
     }
 
     public void saveCustomer(CustomerDTO dto) throws Exception {
-        EntityManager entityManager =  EntityManagerUtil.getEntityManager();
+        EntityManager entityManager =  EntityManagerUtil.getInstance().getEntityManager();
         entityManager.getTransaction().begin();
         customerDAO.setEntityManager(entityManager);
         customerDAO.save(new Customer(dto.getId(), dto.getName(), dto.getAddress()));
@@ -49,7 +49,7 @@ public class CustomerBOImpl implements CustomerBO {
     }
 
     public void updateCustomer(CustomerDTO dto) throws Exception {
-        EntityManager entityManager =  EntityManagerUtil.getEntityManager();
+        EntityManager entityManager =  EntityManagerUtil.getInstance().getEntityManager();
         entityManager.getTransaction().begin();
         customerDAO.setEntityManager(entityManager);
         customerDAO.update(new Customer(dto.getId(), dto.getName(), dto.getAddress()));
@@ -58,7 +58,7 @@ public class CustomerBOImpl implements CustomerBO {
     }
 
     public void removeCustomer(String id) throws Exception {
-        EntityManager entityManager =  EntityManagerUtil.getEntityManager();
+        EntityManager entityManager =  EntityManagerUtil.getInstance().getEntityManager();
         entityManager.getTransaction().begin();
         customerDAO.setEntityManager(entityManager);
         customerDAO.delete(id);

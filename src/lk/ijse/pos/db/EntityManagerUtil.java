@@ -15,6 +15,12 @@ public class EntityManagerUtil {
     private EntityManagerUtil() {
 
     }
+    public static EntityManagerUtil getInstance(){
+        if (entityManagerUtil == null){
+            entityManagerUtil = new EntityManagerUtil();
+        }
+        return entityManagerUtil;
+    }
 
     public EntityManagerFactory getFactory() {
         File propFile = new File("resources/application.properties");
